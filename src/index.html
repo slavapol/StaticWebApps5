@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.4/cytoscape.min.js"></script>
     <!--<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>-->
     <!-- for testing with local version of cytoscape.js -->
@@ -17,12 +17,14 @@
     <!--<script src="https://unpkg.com/dagre@0.7.4/dist/dagre.js"></script>-->
     <!--<script src="cytoscape-dagre.js"></script>-->
 
-    <script src="networks.js"></script>
-    <script src="networksAll.js"></script>
-    <script src="networksTest.js"></script>
-    <script src="styles.js"></script>
+    <script src="./networks/networksAll.js"></script>
+    <script src="./networks/networksActive.js"></script>
+    <script src="./networks/networksSpecific.js"></script>
+    <script src="./networks/networksTest.js"></script>
+    <script src="./networks/styles.js"></script>
+    <script src="./networks/stylesSpecific.js"></script>
 
-    <script src="main.js"></script>
+    <script src="./js/main.js"></script>
 
     <style>
         body {
@@ -62,12 +64,25 @@
             border-color: red;
         }
 
-        #tblInfo td {
-            font-weight : bold;
+        #tblInfo {
+            /*            width: 100%;
+            height: 100%;*/
+            width: 20%;
+            position: fixed;
+            bottom: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: #f0f0f0;
+            border: 4px solid white;
         }
-        #tblInfo td span{
-            font-weight : 100;
-        }
+
+            #tblInfo td {
+                font-weight: bold;
+            }
+
+                #tblInfo td span {
+                    font-weight: 100;
+                }
     </style>
 
     <script>
@@ -91,15 +106,53 @@
                             <br /><br />
                             <button id="btnFit" onclick="showSelectedOnly();">Show Selected Only</button>
                             <br /><br />
-                            <button id="btnFit" onclick="showActiveOnly();">Show Active Only</button>
+                            <button id="btnActive" onclick="showActiveOnly();">Show Active Only</button>
                             <br /><br />
                             <input type="checkbox" id="chkShowNeighbor"><label for="chkShowNeighbor">Show Neighbor On Select</label>
+
+                            <br /><br />
+                            <br /><br />
+                            <div>
+                                <input type="radio" id="option1" name="options" value="Map1" checked="checked"><label for="option1">All Directives</label><br>
+                                <input type="radio" id="option2" name="options" value="Map2"><label for="option2">Active Only</label><br>
+                                <input type="radio" id="option3" name="options" value="Map3"><label for="option3">Specific NNSA</label><br>
+                            </div>
+
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <!--<input type="checkbox" id="chkShowNeighbor" ><label for="chkShowNeighbor">Show Neighbor On Select</label>--> 
-                            <table id="tblInfo" style="display:none" >
+                            <!--<input type="checkbox" id="chkShowNeighbor" ><label for="chkShowNeighbor">Show Neighbor On Select</label>-->
+                            <table id="tblInfo" style="display:none">
+                                <tr><td>ID:</td><td><span id="lblID"></span></td></tr>
+                                <tr><td>Title:</td><td><span id="lblTitle1"></span></td></tr>
+                                <tr><td>Subjects:</td><td><span id="lblSubjects"></span></td></tr>
+                                <tr><td>Status:</td><td><span id="lblStatus"></span></td></tr>
+                                <tr><td>Type:</td><td><span id="lblType"></span></td></tr>
+                                <tr><td>URL:</td><td><a target="_blank" id="lblUrl">Click here</a></td></tr>
+
+                                <tr><td>Writer:</td><td><span id="lblWriter"></span></td></tr>
+                                <tr><td>OPI</td><td><span id="lblOPI"></span></td></tr>
+                                <tr><td>SLM Office</td><td><span id="lblSLMOffice"></span></td></tr>
+                                <tr><td>Issue Date</td><td><span id="lblIssueDate"></span></td></tr>
+                                <tr><td>Last Update</td><td><span id="lblLastUpdate"></span></td></tr>
+                                <tr><td>CRD</td><td><span id="lblCRD"></span></td></tr>
+                                <tr><td>DNFSB</td><td><span id="lblDNFSB"></span></td></tr>
+                                <tr><td>CTA</td><td><span id="lblCTA"></span></td></tr>
+                                <tr><td>Misc&nbsp;Comments</td><td><span id="lblMiscComments"></span></td></tr>
+                                <tr><td>Pdf</td><td><a target="_blank" id="lblPdf">Click here</a></td></tr>
+                                
+                                <tr><td>OPR</td><td><span id="lblOPR"></span></td></tr>
+                                <tr><td>Approved Date</td><td><span id="lblApprovedDate"></span></td></tr>
+                                <tr><td>Invoking&nbsp;Directive</td><td><span id="lblInvokingDirective"></span></td></tr>
+                                
+                                
+                                
+                                <tr><td> </td><td> </td></tr>
+                            </table>
+
+                            <!--
+                            <table id="tblInfo" style="display:none">
                                 <tr>
                                     <td>
                                         ID: <span id="lblID"></span><br />
@@ -111,6 +164,7 @@
                                     </td>
                                 </tr>
                             </table>
+                            -->
                         </td>
                     </tr> 
                 </table>
