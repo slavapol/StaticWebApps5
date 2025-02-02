@@ -9,7 +9,19 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.4/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-cola@2.2.3/cytoscape-cola.js"></script>
+    
+
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape-cola/2.3.0/cytoscape-cola.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape-cose-bilkent/3.0.1/cytoscape-cose-bilkent.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape-dagre/2.3.0/cytoscape-dagre.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape-cxtmenu/3.3.0/cytoscape-cxtmenu.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape-panzoom/2.1.0/cytoscape-panzoom.js"></script>-->
+
     <!--<script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>-->
     <!-- for testing with local version of cytoscape.js -->
     <!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
@@ -102,14 +114,25 @@
                         <td>
                             <input type="text" id="txtSearch" placeholder="Search By ID" onkeyup="searchByID(this)">
                             <br /><br />
-                            <button id="btnPan" onclick="resetAll()">Reset</button>&nbsp;&nbsp;<button id="btnFit" onclick="cy.fit(padding = 200);">Fit</button>
+                            <button id="btnPan" onclick="resetAll()">Reset</button>&nbsp;&nbsp;<button id="btnPan" onclick="location.reload();">Reset All </button>&nbsp;&nbsp;<button id="btnFit" onclick="cy.fit(padding = 200);">Fit</button>
                             <br /><br />
                             <button id="btnFit" onclick="showSelectedOnly();">Show Selected Only</button>
                             <br /><br />
                             <button id="btnActive" onclick="showActiveOnly();">Show Active Only</button>
                             <br /><br />
                             <input type="checkbox" id="chkShowNeighbor"><label for="chkShowNeighbor">Show Neighbor On Select</label>
+                            <br /><br />
+                            <div>
+                                <label for="ddlLayout">Layout:</label>
+                                <select id="ddlLayout" onchange="switchLayout(this)" style="width:100px">
+                                    <option value="preset" selected="selected">preset</option>
+                                    <option value="breadthfirst">breadthfirst</option>
+                                    <option value="concentric">concentric</option>
+                                    <option value="cose">cose</option>
+                                    <option value="cola">cola</option>
 
+                                </select>
+                            </div>
                             <br /><br />
                             <br /><br />
                             <div>

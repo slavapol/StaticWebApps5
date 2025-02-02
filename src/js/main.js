@@ -112,12 +112,16 @@ function InitCy() {
 
 function checkSelected(evt) {
 
-  var typeIdsNodes = cy.elements('node:selected');
-  console.log('unselect node:selected', typeIdsNodes.length);
-  if (typeIdsNodes.length === 0) {
+  var selNodes = cy.elements('node:selected');
+  console.log('unselect node:selected', selNodes.length);
+  if (selNodes.length === 0) {
     cy.nodes().removeClass('highlight'); // Remove the highlight from all nodes
     $('#tblInfo').hide();
   } else {
+    var nd = selNodes[0].data();
+    if (nd.ID === undefined) {
+      return;
+    }
     $('#tblInfo').show();
   }
 
@@ -287,7 +291,11 @@ function searchByID(el) {
     return;
   }
   cy.nodes().filter(function (ele) {
+    if (ele.data('ID') === undefined) {
+      return false;
+    }
     return ele.data('ID').includes(sval);
+    //return ele.data('ID').includes(sval);
   }).select();
 
   //> 5 && ele.data('type') === 'protein';
@@ -322,6 +330,11 @@ function showInfo(n) {
   var nd = n.data();
   console.log(nd);
   console.log(JSON.stringify(nd, null, 4));
+  if (nd.ID === undefined) {
+    console.error('no ID');
+    $('#tblInfo').hide();
+    return;
+  }
 
   $('#lblID').text(nd.ID);
   $('#lblSubjects').text(str(nd.Subjects));
@@ -331,6 +344,7 @@ function showInfo(n) {
   
   $('#lblUrl').attr("href", nd.name); // TODO: fix
   $('#lblPdf').attr("href", nd.PDFDocLink); // TODO: fix
+  $('#lblPdf').text(nd.PDFDocName);
 
   $('#lblWriter').text(str(nd.Writer));
   $('#lblOPI').text(str(nd.OPI));
@@ -355,6 +369,17 @@ function showInfo(n) {
 //  info.innerHTML = JSON.stringify(nodeData, null, 4);
 }
 
+function switchLayout(el) {
+  var layout = el.value;
+  //console.log('layout', layout);
+  //if (layout === 'preset') {
+  //  cy.layout('preset');
+  //  cy.fit();
+  //  return;
+  //}
+    
+  cy.layout({ name: layout }).run();
+}
 function str(txt) {
   if (txt === undefined) {
     return '';
