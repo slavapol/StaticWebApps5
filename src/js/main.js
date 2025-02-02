@@ -280,6 +280,8 @@ function resetAll(isFit=true) {
   }
   
   $('#tblInfo').hide();
+  // det ddlLayout to default
+  $('#ddlLayout').val('preset');
 }
 function searchByID(el) {
   var sval = el.value.trim();
